@@ -13,7 +13,7 @@ NAME is show, SEASONS is number of seasons."
     (error "Not in org-mode"))
 
   (if (eq seasons 1)
-      (my-tv-new-season name)
+      (my-tv-new-season name t)
 
     (org-insert-subheading t)
     (insert name)
