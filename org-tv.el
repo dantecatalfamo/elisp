@@ -33,7 +33,7 @@ make it into a todo entry with a percentage for each season"
                         todo))))
 
 (defun org-tv-new-season (name &optional indent todo)
-  "Insert season, part of tv thing.
+  "Insert season, part of org-tv.
 NAME is name of the season, INDENT is weather or not to indent
 further, TODO adds a percentage to the end of the season line"
   (if indent
