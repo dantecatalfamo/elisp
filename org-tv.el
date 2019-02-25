@@ -50,6 +50,7 @@ further, TODO adds a percentage to the end of the season line"
   (let ((episodes (read-number (concat "Episodes in " name ": "))))
     (org-return-indent)
     (insert "- [ ] Ep. 1")
+    (org-update-statistics-cookies nil)
     (dotimes (e (- episodes 1))
       (org-insert-todo-heading t)
       (insert (concat "Ep. " (number-to-string (+ 2 e)))))))
