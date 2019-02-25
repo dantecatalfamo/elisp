@@ -28,7 +28,7 @@ make it into a todo entry with a percentage for each season"
       (insert " [/]")
       (org-update-statistics-cookies nil))
     (dotimes (i seasons)
-      (org-tv-new-season (concat "Season " (number-to-string (+ 1 i)))
+      (org-tv-new-season (concat "Season " (number-to-string (1+ i)))
                         (eq i 0)
                         todo))))
 
@@ -51,7 +51,7 @@ further, TODO adds a percentage to the end of the season line"
     (org-return-indent)
     (insert "- [ ] Ep. 1")
     (org-update-statistics-cookies nil)
-    (dotimes (e (- episodes 1))
+    (dotimes (e (1- episodes))
       (org-insert-todo-heading t)
       (insert (concat "Ep. " (number-to-string (+ 2 e)))))))
 
