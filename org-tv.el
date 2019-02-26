@@ -28,9 +28,10 @@ make it into a todo entry with a percentage for each season"
       (insert " [/]")
       (org-update-statistics-cookies nil))
     (dotimes (i seasons)
-      (org-tv-new-season (concat "Season " (number-to-string (1+ i)))
-                        (eq i 0)
-                        todo))))
+      (let ((season-name (concat "Season " (number-to-string (1+ i)))))
+        (org-tv-new-season (read-string (concat season-name " name: ") season-name)
+                           (eq i 0)
+                           todo)))))
 
 (defun org-tv-new-season (name &optional indent todo)
   "Insert season, part of org-tv.
