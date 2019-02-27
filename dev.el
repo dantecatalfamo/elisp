@@ -16,9 +16,11 @@ PROJECT-ROOT is the root directory of the project"
                                      "~/src/github.com/Shopify/")))
     (let ((project-name (file-name-nondirectory
                          (directory-file-name project-root))))
-      (unless (member project-root projectile-known-projects)
+      (unless (member project-root
+                      projectile-known-projects)
         (projectile-add-known-project project-root))
-      (treemacs-do-add-project-to-workspace project-root project-name)
+      (treemacs-do-add-project-to-workspace project-root
+                                            project-name)
       (cd project-root)
       (helm-projectile)))
 
