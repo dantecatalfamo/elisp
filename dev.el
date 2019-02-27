@@ -20,9 +20,9 @@ PROJECT-ROOT is the root directory of the project"
                       projectile-known-projects)
         (projectile-add-known-project project-root))
       (treemacs-do-add-project-to-workspace project-root
-                                            project-name)
-      (cd project-root)
-      (helm-projectile)))
+                                            project-name))
+    (let ((projectile-completion-system 'helm))
+      (projectile-switch-project-by-name project-root)))
 
 (provide 'dev)
 ;;; dev.el ends here
