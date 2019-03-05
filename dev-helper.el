@@ -23,20 +23,29 @@ PROJECT-ROOT is the project's root directory, PROJECT-NAME is the name."
   (treemacs-do-add-project-to-workspace project-root
                                         project-name))
 
-(defun dev-change-project (project-root)
+(defun dev-change-project (project-root &optional ARG)
   "Change dev projects, add the selected project to projectile and treemacs.
-PROJECT-ROOT is the root directory of the project"
+PROJECT-ROOT is the root directory of the project.
+When run with ARG, open project with Dired instead of projectile-helm"
   (interactive (list
                 (read-directory-name "Select Project Root: "
-                                     "~/src/github.com/Shopify/")))
+                                     "~/src/github.com/Shopify/")
+                current-prefix-arg))
+
     (let ((project-name (file-name-nondirectory
                          (directory-file-name project-root))))
 
       (dev-add-project-projectile project-root project-name)
       (dev-add-project-treemacs project-root project-name))
 
-    (let ((projectile-completion-system 'helm))
-      (projectile-switch-project-by-name project-root)))
+    (if ARG
+        (dired project-root)
+
+      (let ((projectile-completion-system 'helm))
+        (projectile-switch-project-by-name project-root))))
 
 (provide 'dev-helper)
 ;;; dev-helper.el ends here
+
+
+(prefix-numeric-value nil)
