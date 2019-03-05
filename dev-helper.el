@@ -46,6 +46,3 @@ When run with ARG, open project with Dired instead of projectile-helm"
 
 (provide 'dev-helper)
 ;;; dev-helper.el ends here
-
-
-(prefix-numeric-value nil)
