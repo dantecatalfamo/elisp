@@ -4,9 +4,47 @@
 
 ;;; Code:
 
+(require 'f)
+(require 'dash)
 (require 'projectile)
-(require 'helm)
 (require 'treemacs)
+
+
+(defun dev--list-subdirs (directory &optional depth)
+  "Return a list of directories inside of DIRECTORY.
+DEPTH is how many folers deep to go."
+  (unless depth (setq depth 1))
+  (if (< depth 1)
+      directory
+    (let (subdir-list)
+      (dolist (dir (directory-files directory) subdir-list)
+        (unless (member dir '("." ".."))
+          (when (f-directory? (f-join directory dir))
+            (push (dev--list-subdirs (expand-file-name (concat (file-name-as-directory directory)
+                                                          dir))
+                                (1- depth))
+                  subdir-list))))
+      (-flatten subdir-list))))
+
+
+(defun dev--last-n-dirs (dir-path depth)
+  "Return a relative path of the last n elements of a path.
+Number of elements specified by DEPTH, path is a string DIR-PATH."
+  (let* ((path (f-split dir-path))
+         (length (safe-length path))
+         path-parts)
+    (dotimes (counter depth path-parts)
+      (push (nth (- (1- length) counter)
+                 path)
+            path-parts))
+    (apply 'f-join path-parts)))
+
+
+(defun dev--list-last-dirs (dir-list depth)
+  "Given list of paths DIR-LIST, apply dev--last-n-dirs to depth DEPTH."
+  (let (dir-paths)
+    (dolist (dir dir-list dir-paths)
+      (push (dev--last-n-dirs dir depth) dir-paths))))
 
 
 (defun dev-add-project-projectile (project-root project-name)
@@ -23,13 +61,18 @@ PROJECT-ROOT is the project's root directory, PROJECT-NAME is the name."
   (treemacs-do-add-project-to-workspace project-root
                                         project-name))
 
+
+(defun dev-select-project (root depth)
+  "Interactively sekect a project directory starting at directory ROOT going to depth DEPTH."
+  (f-join root (completing-read "Select Project: " (dev--list-last-dirs (dev--list-subdirs root depth) depth))))
+
+
 (defun dev-change-project (project-root &optional ARG)
   "Change dev projects, add the selected project to projectile and treemacs.
 PROJECT-ROOT is the root directory of the project.
-When run with ARG, open project with Dired instead of projectile-helm"
+When run with ARG, open project with Dired instead of projectile"
   (interactive (list
-                (read-directory-name "Select Project Root: "
-                                     "~/src/github.com/Shopify/")
+                (dev-select-project "~/src/github.com" 2)
                 current-prefix-arg))
 
     (let ((project-name (file-name-nondirectory
@@ -40,9 +83,7 @@ When run with ARG, open project with Dired instead of projectile-helm"
 
     (if ARG
         (dired project-root)
-
-      (let ((projectile-completion-system 'helm))
-        (projectile-switch-project-by-name project-root))))
+      (projectile-switch-project-by-name project-root)))
 
 (provide 'dev-helper)
 ;;; dev-helper.el ends here
