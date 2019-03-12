@@ -142,6 +142,6 @@ calling ejson.  If nil use the existing environment.")
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.ejson\\'" . ejson-mode))
-(provide 'ejson-mode)
 
+(provide 'ejson-mode)
 ;;; ejson-mode ends here
