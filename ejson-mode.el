@@ -135,7 +135,7 @@ calling ejson.  If nil use the existing environment.")
     map))
 
 (define-derived-mode ejson-mode js-mode "Encrypted-JSON"
-  "A mode for editing EJSON files"
+  "A mode for editing ejson files"
   (add-hook 'before-save-hook 'ejson-generate-on-save nil t)
   (add-hook 'after-save-hook 'ejson-encrypt-on-save nil t))
 
