@@ -18,10 +18,10 @@ make it into a todo entry with a percentage for each season"
     (error "Not in org-mode"))
 
   (if (eq seasons 1)
-      (org-tv-new-season name t todo)
+      (org-tv-new-season name nil todo)
 
     (if todo
-        (org-insert-todo-subheading t)
+        (org-insert-todo-heading t)
       (org-insert-subheading t))
     (insert name)
     (when todo
