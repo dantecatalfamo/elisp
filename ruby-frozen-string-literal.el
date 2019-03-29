@@ -2,7 +2,7 @@
 
 ;;; Commentary:
 
-;; Convenience function to check the beginnign of ruby files for the
+;; Convenience function to check the beginning of ruby files for the
 ;; magic comment # frozen_string_literal: true and offer to insert it
 ;; if not alrady there
 
