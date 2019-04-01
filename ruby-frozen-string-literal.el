@@ -16,8 +16,7 @@ If the comment doesn't exist, offer to insert it."
     (goto-char (point-min))
     (unless (string= (thing-at-point 'line)
                      "# frozen_string_literal: true\n")
-      (when (y-or-n-p "Insert frozen string literal statement? ")
-        (insert "# frozen_string_literal: true\n\n")))))
+        (insert "# frozen_string_literal: true\n\n"))))
 
 (provide 'ruby-frozen-string-literal)
 ;;; ruby-frozen-string-literal.el ends here
