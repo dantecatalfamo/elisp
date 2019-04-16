@@ -1,4 +1,4 @@
-;;; dev-helper -- heplers for managing dev project directories
+;;; dev-helper -- heplers for managing dev project directories -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; A few helpful functions for managing and navigating work projects
 
@@ -87,10 +87,11 @@ When run with ARG, open project with Dired instead of projectile"
 
 
 (defun dev--shell-command-no-newline (command)
-  "Run \"shell-command-to-string\" on COMMAND and remove the newline."
+  "Run `shell-command-to-strin' on COMMAND and remove the newline."
   (replace-regexp-in-string "\n$" "" (shell-command-to-string command)))
 
 
+;;;###autoload
 (defun dev-open-pr ()
   "Open a PR from the current branch (github only)."
   (interactive)
