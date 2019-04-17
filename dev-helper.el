@@ -86,17 +86,12 @@ When run with ARG, open project with Dired instead of projectile"
       (projectile-switch-project-by-name project-root)))
 
 
-(defun dev--shell-command-no-newline (command)
-  "Run `shell-command-to-strin' on COMMAND and remove the newline."
-  (replace-regexp-in-string "\n$" "" (shell-command-to-string command)))
-
-
 ;;;###autoload
 (defun dev-open-pr ()
   "Open a PR from the current branch (github only)."
   (interactive)
-  (let ((origin-url (dev--shell-command-no-newline "git remote get-url origin"))
-        (current-branch (dev--shell-command-no-newline "git rev-parse --abbrev-ref HEAD")))
+  (let ((origin-url (string-trim "git remote get-url origin"))
+        (current-branch (string-trim "git rev-parse --abbrev-ref HEAD")))
     (browse-url (format "https://github.com/%s/pull/new/%s"
                         (replace-regexp-in-string ".+github.com:\\(.+\\)\\.git" "\\1" origin-url)
                         current-branch))))
