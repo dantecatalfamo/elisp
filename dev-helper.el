@@ -9,6 +9,12 @@
 (require 'projectile)
 (require 'treemacs)
 
+(defvar dev-projects-root "~/src/github.com"
+  "Root directory under which all projects are located.")
+
+(defvar dev-projects-depth 2
+  "Depth under the root that projects' root folders are located.")
+
 
 (defun dev--list-subdirs (directory &optional depth)
   "Return a list of directories inside of DIRECTORY.
@@ -72,7 +78,7 @@ PROJECT-ROOT is the project's root directory, PROJECT-NAME is the name."
 PROJECT-ROOT is the root directory of the project.
 When run with ARG, open project with Dired instead of projectile"
   (interactive (list
-                (dev-select-project "~/src/github.com" 2)
+                (dev-select-project dev-projects-root dev-projects-depth)
                 current-prefix-arg))
 
     (let ((project-name (file-name-nondirectory
