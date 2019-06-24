@@ -18,5 +18,7 @@ Example: (bytes 12G)"
       `(* ,number (expt 1024 ,pow))
     (error "Unrecognized unit %s" byte-units)))
 
+(defalias 'byteconst #'bytes-constant)
+
 (provide 'bytes-constant)
 ;;; bytes-constant.el ends here
