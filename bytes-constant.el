@@ -1,4 +1,4 @@
-;;; byte-macro.el -- Add byte shorthand to elisp
+;;; bytes-constant.el -- Add byte shorthand to elisp
 ;;; Commentary:
 ;; Just thought this might be a neat thing to add
 ;; My first macro, created without reference
@@ -6,7 +6,7 @@
 ;;; Code:
 (require 'subr-x)
 
-(defmacro bytes (byte-units)
+(defmacro bytes-constant (byte-units)
   "Convert BYTE-UNITS to number.
 Byte units are in the form [0-9]+[BKMGTPEZ].
 Example: (bytes 12G)"
@@ -18,5 +18,5 @@ Example: (bytes 12G)"
       `(* ,number (expt 1024 ,pow))
     (error "Unrecognized unit %s" byte-units)))
 
-(provide 'byte-macro)
-;;; byte-macro.el ends here
+(provide 'bytes-constant)
+;;; bytes-constant.el ends here
