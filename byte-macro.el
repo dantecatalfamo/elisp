@@ -8,12 +8,12 @@
 
 (defmacro bytes (byte-units)
   "Convert BYTE-UNITS to number.
-Byte units are in the form [0-9]+[BKMGTPZ].
+Byte units are in the form [0-9]+[BKMGTPEZ].
 Example: (bytes 12G)"
-  (if-let* ((units '(B K M G T P Z))
+  (if-let* ((units '(B K M G T P E Z))
             (symbol-name (symbol-name byte-units))
             (unit (replace-regexp-in-string "[0-9]+" "" symbol-name))
-            (number (string-to-number (replace-regexp-in-string "[BKMGTPZ]" "" symbol-name)))
+            (number (string-to-number (replace-regexp-in-string "[BKMGTPEZ]" "" symbol-name)))
             (pow (cl-position unit units :test 'string=)))
       `(* ,number (expt 1024 ,pow))
     (error "Unrecognized unit %s" byte-units)))
