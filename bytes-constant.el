@@ -5,6 +5,7 @@
 
 ;;; Code:
 (require 'subr-x)
+(require 'cl-lib)
 
 (defmacro bytes-constant (byte-units)
   "Convert BYTE-UNITS to number.
