@@ -23,6 +23,7 @@
                 (attrs ',properties)))))
 
 (defmacro deftags-single (&rest tags)
+  "Define multiple single TAGS in one statement."
   (let (defined)
     (dolist (tag tags defined)
       (push `(deftag-single ,tag) defined))
