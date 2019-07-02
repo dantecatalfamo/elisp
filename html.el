@@ -1,3 +1,13 @@
+(defun attrs (properties)
+  "Construct properties for an html tag from PROPERTIES.
+Properties can either be a list of properties or a single property,
+with the form (PROPERTY VALUE1 VALUE2 VALUE2)."
+  (cond
+   ((listp (car properties))
+    (apply #'concat (mapcar #'attrs properties)))
+   (properties (format " %s=\"%s\"" (car properties) (mapconcat #'identity (cdr properties) " ")))
+   (t nil)))
+
 (defmacro deftag (name)
   "Define an HTML tag with name NAME."
   (let* ((tagname (symbol-name name))
@@ -48,15 +58,6 @@
   `(progn (deftags ,@tags)
           (deftags-short ,@tags)))
 
-(defun attrs (properties)
-  "Construct properties for an html tag from PROPERTIES.
-Properties can either be a list of properties or a single property,
-with the form (PROPERTY VALUE1 VALUE2 VALUE2)."
-  (cond
-   ((listp (car properties))
-    (apply #'concat (mapcar #'attrs properties)))
-   (properties (format " %s=\"%s\"" (car properties) (mapconcat #'identity (cdr properties) " ")))
-   (t nil)))
 
 (deftags1 html head title body div p b script style span)
 (deftags-single br link)
