@@ -48,6 +48,13 @@ Example:
             (insert ip "\t" hostname dot-tld "\n")))
       (buffer-string))))
 
+(defun my/org-export-hosts ()
+  "Export hosts from the current file."
+  (interactive)
+  (let ((hosts (my/org-export-config-hosts (current-buffer))))
+    (switch-to-buffer (generate-new-buffer-name "hosts"))
+    (insert hosts)))
+
 (defun my/org-export-config-ssh (buffer)
   "Format BUFFER as an SSH config file."
   (with-temp-buffer
@@ -60,16 +67,24 @@ Example:
               (ssh-forward (plist-get host :SSH_FORWARD))
               (ssh-port (plist-get host :SSH_PORT))
               (ssh-user (plist-get host :SSH_USER)))
-          (insert "Host " hostname "\n")
-          (insert "  HostName " addr "\n")
-          (when ssh-forward
-              (insert "  ForwardAgent yes\n"))
-          (when ssh-port
-              (insert "  Port " ssh-port "\n"))
           (when ssh-user
+            (insert "Host " hostname "\n")
+            (insert "  HostName " addr "\n")
+            (when ssh-forward
+              (insert "  ForwardAgent yes\n"))
+            (when ssh-port
+              (insert "  Port " ssh-port "\n"))
+            (when ssh-user
               (insert "  User " ssh-user "\n"))
-          (insert "\n"))))
+            (insert "\n")))))
     (buffer-string)))
+
+(defun my/org-export-ssh ()
+  "Export ssh config from the current buffer."
+  (interactive)
+  (let ((config (my/org-export-config-ssh (current-buffer))))
+    (switch-to-buffer (generate-new-buffer "ssh-config"))
+    (insert config)))
 
 (provide 'org-export-config)
 ;;; org-export-config.el ends here
