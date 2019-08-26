@@ -52,7 +52,7 @@ Example:
   "Format BUFFER as an SSH config file."
   (with-temp-buffer
     (let ((hosts (my/org-export-config-get-addrs buffer)))
-      (insert my/ssh-optional-header "\n")
+      (insert my/org-export-config-ssh-header "\n")
       (dolist (host hosts)
         (let ((hostname (plist-get host :HOST))
               (addr (or (plist-get host :IP)
