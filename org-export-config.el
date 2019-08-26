@@ -19,8 +19,7 @@ Example:
     :SSH_USER:    john
     :SSH_PORT:    2222
     :SSH_FORWARD: t
-    :END:
-"
+    :END:"
   (with-current-buffer buffer
     (org-element-map (org-element-parse-buffer) 'headline
       (lambda (node)
