@@ -19,7 +19,13 @@ Example:
     :SSH_USER:    john
     :SSH_PORT:    2222
     :SSH_FORWARD: t
-    :END:"
+    :END:
+becomes:
+Host server
+  HostName 192.168.0.2
+  ForwardAgent yes
+  Port 2222
+  User john"
   (with-current-buffer buffer
     (org-element-map (org-element-parse-buffer) 'headline
       (lambda (node)
