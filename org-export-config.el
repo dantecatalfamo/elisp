@@ -10,6 +10,9 @@
 (defvar my/org-export-config-ssh-header ""
   "Optional text to be inserted at the top of SSH config.")
 
+(defvar my/org-export-config-hosts-tld nil
+  "Optional tld to append to hostnames in hosts file.")
+
 (defun my/org-export-config-get-addrs (buffer)
   "Parse org BUFFER for headlines with IP or URL properties, and optional SSH properties.
 Example:
@@ -37,11 +40,13 @@ Example:
                   :SSH_PORT ssh-port
                   :SSH_USER user)))))))
 
-(defun my/org-export-config-hosts (buffer &optional tld)
+(defun my/org-export-config-hosts (buffer)
   "Format BUFFER as hosts file with optional TLD appended to hostnames."
   (with-temp-buffer
     (let ((hosts (my/org-export-config-get-addrs buffer))
-          (dot-tld (if tld (concat "." tld) "")))
+          (dot-tld (if my/org-export-config-hosts-tld
+                       (concat "." my/org-export-config-hosts-tld)
+                     "")))
       (dolist (host hosts)
         (if-let ((ip (plist-get host :IP))
                  (hostname (plist-get host :HOST)))
@@ -53,7 +58,8 @@ Example:
   (interactive)
   (let ((hosts (my/org-export-config-hosts (current-buffer))))
     (switch-to-buffer (generate-new-buffer-name "hosts"))
-    (insert hosts)))
+    (insert hosts)
+    (conf-space-mode)))
 
 (defun my/org-export-config-ssh (buffer)
   "Format BUFFER as an SSH config file."
@@ -84,7 +90,8 @@ Example:
   (interactive)
   (let ((config (my/org-export-config-ssh (current-buffer))))
     (switch-to-buffer (generate-new-buffer "ssh-config"))
-    (insert config)))
+    (insert config)
+    (conf-space-mode)))
 
 (provide 'org-export-config)
 ;;; org-export-config.el ends here
